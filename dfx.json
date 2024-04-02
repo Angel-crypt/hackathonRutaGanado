@@ -1,0 +1,26 @@
+{
+  "canisters": {
+    "rutaganado_v_backend": {
+      "main": "src/rutaganado_v_backend/main.mo",
+      "type": "motoko"
+    },
+    "rutaganado_v_frontend": {
+      "dependencies": [
+        "rutaganado_v_backend"
+      ],
+      "source": [
+        "src/rutaganado_v_frontend/dist"
+      ],
+      "type": "assets",
+      "workspace": "rutaganado_v_frontend"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
