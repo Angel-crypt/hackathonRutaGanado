@@ -1,92 +1,134 @@
+// Importaciones de módulos necesarios
+import HashMap "mo:base/HashMap";
 import Text "mo:base/Text";
 import Principal "mo:base/Principal";
-import HashMap "mo:base/HashMap";
-import Hash "mo:base/Hash";
+import Debug "mo:base/Debug";
 import Nat "mo:base/Nat";
+import Iter "mo:base/Iter";
 
-actor appTareas {
-  type Task = {
-    userPrincipal : Principal;
-    nameTarea : Text;
+// Definición del actor
+actor Activitiesganado {
+
+  // Definición de tipos de datos
+  type User = Principal;
+
+  type DatosGanado = {
+    numId : Nat;
+    peso : Nat;
+    raza: Text;
+    sexo: Text;
+  };
+
+  type Info = {
+    nacimiento: Text;
+    estado_salud : Text;
     description : Text;
   };
 
-  var tasks = HashMap.HashMap<Nat, Task>(1, Nat.equal, Hash.hash);
+  type Ganado = HashMap.HashMap<Text, Info>;
 
-  stable var taskIdCount : Nat = 0;
+  // Inicialización 
+  var ganado = HashMap.HashMap<User, Ganado>(0, Principal.equal, Principal.hash);
 
-  public func createTask (task : Task) : async () {
-    //1. Autor
-
-    //2. Preparar los datos
-    let id : Nat = taskIdCount;
-    taskIdCount+=1;
-
-    //3. Crear tarea
-    tasks.put(id,task);
-
-    //4. Return confirmacion
-    ();
+  // Función para obtener el usuario que realiza la llamada
+  public shared(msg) func getUser() : async Principal {
+    let currentUser = msg.caller;
+    return currentUser;
   };
 
-  public query func readTask (id : Nat) : async ?Task {
-    //1, Autor
+  // Función para agregar
+  public shared (msg) func saveCabeza(datosGanado: DatosGanado, info: Info) : async Info {
+    let user : Principal = msg.caller;
+    let cabeza : Text = Nat.toText(datosGanado.peso) #"/"# datosGanado.raza #"/"# datosGanado.sexo #"/"# Nat.toText(datosGanado.numId);
+    let resultGanado = ganado.get(user);
 
-    //2. Pedir datos
-    let taskRes : ?Task = tasks.get(id);
-
-    //3. Return la tarea requerida o Null
-    return taskRes;
-  };
-
-  public func updateTask (task : Task, id: Nat) : async Text {
-    //1. Autor
-
-    //2. Pedir datos
-    let taskRes : ?Task = tasks.get(id);
-
-    //3. Validar si existe
-    
-    switch (taskRes) {
-      case (null){
-        return "Estas tratando de actualizar una tarea que no existe";
+    var finalGanado : Ganado = switch resultGanado {
+      case (null) {
+        HashMap.HashMap(0, Text.equal, Text.hash);
       };
-      case (?currentTask){
-    //4. Actualizar los nuevos datos de Tarea
-      let updatedTask : Task = {
-        userPrincipal = currentTask.userPrincipal;
-        nameTarea = task.nameTarea;
-        description = task.description;
+      case (?resultGanado) resultGanado;
+    };
+
+    finalGanado.put(cabeza, info);
+    ganado.put(user, finalGanado);
+
+    Debug.print("Tu actividad fue agregada correctamente, <<" # Principal.toText(user) # ">> gracias! :)");
+    return info;
+  };
+
+  // Función para obtener la información de una cabeza especifica
+  public shared func getCabeza(user: Principal, identificador: Text) : async ?Info {
+    let resultGanado = ganado.get(user);
+
+    switch resultGanado {
+      case (?Ganado) {
+        Ganado.get(identificador);
+      };
+      case (null) null;
+    }
+  };
+
+  // Función para obtener todas las cabezas del ganado
+  public query func getGanado(user : User) : async [(Text,Info)] {
+    let result = ganado.get(user);
+
+    var resultsGanado : Ganado = switch result {
+    case (null) {
+      HashMap.HashMap<Text, Info>(0, Text.equal, Text.hash);
+    };
+    case (?result) result;
+  };
+
+  // Convertir las entradas del mapa en una secuencia
+  let GanadoEntries = Iter.toArray<(Text, Info)>(resultsGanado.entries());
+
+  return GanadoEntries;
+  };
+
+
+  // Función para actualizar la información de una cabeza en un identificador específico
+  public shared (_msg) func updateCabeza(user: Principal, identificador: Text, newInfo: Info) : async Bool {
+    let resultGanado = ganado.get(user);
+
+    switch resultGanado {
+      case (?Ganado) {
+        if (Ganado.get(identificador) != null) {
+          Ganado.put(identificador, newInfo);
+          ganado.put(user, Ganado);
+          Debug.print("Actividad actualizada correctamente");
+          true;
+        } else {
+          Debug.print("La actividad no existe para el identificador proporcionad0");
+          false;
         };
-
-    //5. Actualizar tarea
-      tasks.put(id, updatedTask);
-
-    //6. Return suceso
-      return "Actualizacion correcta!";
       };
-    };
+      case (null) {
+        Debug.print("No hay ganado registrado para este usuario");
+        false;
+      };
+    }
   };
 
-  public func deleteTask (id: Nat) : async Text {
-    //1. Autor
+  // Función para eliminar una cabeza de un identificador específico
+  public shared (_msg) func deleteCabeza(user: Principal, identificador: Text) : async Bool {
+    let resultGanado = ganado.get(user);
 
-    //2. Pedir datos
-    let taskRes : ?Task = tasks.get(id);
-
-    //3. Validar si existe
-    
-    switch (taskRes) {
-      case (null){
-        return "Estas tratando de eliminar una tarea que no existe";
+    switch resultGanado {
+      case (?Ganado) {
+        if (Ganado.get(identificador) != null) {
+          Ganado.delete(identificador);
+          ganado.put(user, Ganado);
+          Debug.print("Cabeza eliminada correctamente");
+          true;
+        } else {
+          Debug.print("La cabeza no existe para la identificador proporcionada");
+          false;
+        };
       };
-      case (?currentTask){
-    //4. Eliminar tarea
-        ignore tasks.remove(id);
-
-    //5. Return suceso
-      return "Eliminacion correcta!";
+      case (null) {
+        Debug.print("No hay cabezas registradas para este usuario");
+        false;
       };
-    };
+    }
   };
 };
