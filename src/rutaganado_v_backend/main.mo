@@ -18,6 +18,10 @@ actor rutaGanado {
         propietario : Text;
         fachaNacimiento : Text;
         ascendencia : Text;
+        vacunas : Text;
+        certificados : Text;
+        mejoramientoGenetico : Text;
+        registroEnfermedades : Text;
     };
     
     // Arete de cabeza
