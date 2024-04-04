@@ -15,18 +15,19 @@ actor rutaGanado {
     //Datos de ingreso
     type DatosCabeza = {
         raza : Text;
-        propietari0 : Text;
-        nacimiento : Nat;
+        propietario : Text;
+        fachaNacimiento : Text;
         ascendencia : Text;
     };
-    // Arete de ganado
+    
+    // Arete de cabeza
     type Arete = Nat;
 
-    // Hashmap de ganado
-    type Ganado = HashMap.HashMap<Text, DatosCabeza>;
+    // Hashmap de cabeza
+    type Cabeza = HashMap.HashMap<Text, DatosCabeza>;
 
     // Inicializar el arreglo
-    var ganado = HashMap.HashMap<User, Ganado>(0, Principal.equal, Principal.hash);
+    var cabeza = HashMap.HashMap<User, Cabeza>(0, Principal.equal, Principal.hash);
     // Funciones 
     // Función para obtener el usuario que realiza la llamada
     public shared (msg) func getUser() : async Principal {
@@ -37,19 +38,20 @@ actor rutaGanado {
     // Funcion para agregar
     public shared (msg) func saveCabeza(datosCabeza:DatosCabeza, arete:Arete) : async DatosCabeza {
         let user : Principal = msg.caller;
-        let cabeza : Text = Nat.toText(arete);
-        let resultGanado = ganado.get(user);
+        let id : Text = Nat.toText(arete);
+        let resultCabeza = cabeza.get(user);
 
-        var finalGanado : Ganado = switch resultGanado {
+        var finalCabeza : Cabeza = switch resultCabeza {
             case(null){
                 HashMap.HashMap(0, Text.equal, Text.hash);
             };
-            case (?resultGanado) resultGanado;
+            case (?resultCabeza) resultCabeza;
         };
 
-        finalGanado.put(cabeza, datosCabeza);
-        ganado.put(user, finalGanado);
-        Debug.print("Tu cabeza <<" #cabeza# ">> fue agregada correctamente, <<" # Principal.toText(user) # ">> gracias! :)");
+
+        finalCabeza.put(id, datosCabeza);
+        cabeza.put(user, finalCabeza);
+        Debug.print("Tu cabeza <<" #id# ">> fue agregada correctamente, <<" # Principal.toText(user) # ">> gracias! :)");
         return datosCabeza;
     };
 };
