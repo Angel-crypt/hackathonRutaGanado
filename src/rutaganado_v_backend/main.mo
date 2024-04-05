@@ -3,7 +3,6 @@ import Text "mo:base/Text";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
-import Bool "mo:base/Bool";
 // Importaciones
 
 // Actor
@@ -17,13 +16,11 @@ actor rutaGanado {
     type DatosCabeza = {
         raza : Text;
         propietario : Text;
-        fachaNacimiento : Text;
+        fechaNacimiento : Text;
         ascendencia : Text;
         destino : Text;
         dieta : Text;
-        vacunas : Text;
-        certificados : Text;
-        mejoramientoGenetico : Text;
+        mejoramientoGenetico : Text; //Agregar categorias
         registroEnfermedades : Text;
     };
 
@@ -37,9 +34,8 @@ actor rutaGanado {
     var cabeza = HashMap.HashMap<User, Cabeza>(0, Principal.equal, Principal.hash);
     // Funciones
     // Función para obtener el usuario que realiza la llamada
-    public shared (msg) func getUser() : async Principal {
-        let currentUser = msg.caller;
-        return currentUser;
+    public query ({ caller }) func whoami() : async Principal {
+        return caller;
     };
 
     // Funcion para agregar
@@ -62,7 +58,8 @@ actor rutaGanado {
     };
 
     // Funcion para consultar especificacmente
-    public query func consultCabeza(user : User, arete : Arete) : async ?DatosCabeza {
+    public query (msg) func consultCabeza(arete : Arete) : async ?DatosCabeza {
+        let user : Principal = msg.caller;
         let resultCabeza = cabeza.get(user);
 
         switch resultCabeza {
@@ -76,7 +73,8 @@ actor rutaGanado {
     };
 
     // Funcion para consultar el ganado
-    public query func consultGanado(user : User) : async [(Text, DatosCabeza)] {
+    public query (msg) func consultGanado() : async [(Text, DatosCabeza)] {
+        let user : Principal = msg.caller;
         let result = cabeza.get(user);
 
         var resultsGanado : Cabeza = switch result {
@@ -93,29 +91,46 @@ actor rutaGanado {
     };
 
     // Función para actualizar datos específicos en DatosGanado en el HashMap
-public shared func updateDatosGanado(user: User, arete: Arete, newData: DatosCabeza): async Bool {
-    // Recueperar el HashMap asocidado al usuario
-    let resultCabeza =  cabeza.get(user);
+    // Función para actualizar datos específicos en DatosGanado en el HashMap
+    public shared func updateDatosGanado(user : User, arete : Arete, datosCabeza : DatosCabeza) : async Text {
+        // Recuperar el HashMap asociado al usuario
+        let resultCabeza = cabeza.get(user);
 
-    switch resultCabeza {
-        case (?Cabeza) {
-            // Verficiar si el arete existe en el HashMap
-            if (Cabeza.get(arete) != null) {
-                // Actualizar los datos de la cabeza
-                Cabeza.put(arete, newData);
-                cabeza.put(user, Cabeza);
-                Debug.print("Datos del ganado actualizados para el arete " # arete);
-                return true; // Indicador de éxito
-            } else {
-                Debug.print("Arete " # arete # " no encontrado en el HashMap.");
-                return false; // Indicador de arete no encontrado
-            }
-        };
-        case (null) {
-            Debug.print("Usuario no encontrado en el HashMap.");
-            return false; // Indicador de usuario no encontrado
+        switch resultCabeza {
+            case (null) {
+                Debug.print("Usuario no encontrado en el HashMap.");
+                return "El usuario no existe"; // Indicador de usuario no encontrado
+            };
+            case (?currentCabeza) {
+                // Verificar si el arete existe en el HashMap actual
+                let currentDatosCabeza = currentCabeza.get(arete);
+                switch currentDatosCabeza {
+                    case (null) {
+                        Debug.print("Arete no encontrado para este usuario.");
+                        return "El arete no existe"; // Indicador de arete no encontrado
+                    };
+                    case (?existingDatosCabeza) {
+                        // Actualizar solo los datos especificados
+                        let updatedDatosCabeza = {
+                            raza = existingDatosCabeza.raza;
+                            propietario = existingDatosCabeza.propietario;
+                            fechaNacimiento = existingDatosCabeza.fechaNacimiento;
+                            ascendencia = existingDatosCabeza.ascendencia;
+                            destino = datosCabeza.destino;
+                            dieta = datosCabeza.dieta;
+                            mejoramientoGenetico = datosCabeza.mejoramientoGenetico;
+                            registroEnfermedades = datosCabeza.registroEnfermedades;
+                        };
+
+                        // Actualizar los datos del arete con los nuevos datos proporcionados
+                        currentCabeza.put(arete, updatedDatosCabeza);
+                        cabeza.put(user, currentCabeza);
+                        Debug.print("Datos principales del arete actualizados correctamente para el usuario.");
+                        return "Datos principales actualizados correctamente";
+                    };
+                };
+            };
         };
     };
-};
 
 };
