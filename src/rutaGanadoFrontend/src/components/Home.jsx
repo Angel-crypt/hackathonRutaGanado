@@ -8,7 +8,7 @@ import {BrowserRouter, Route, Link, Routes} from 'react-router-dom';
 import Login from "./Bienvenida";
 import Areas from "./Areas";
 import Alumnos from "./Alumnos";
-import AreaNueva from "./AreaNueva";
+import AreaNueva from "./CabezasNuevas";
 
 const Home = () => {
   const {principal} = useConnect();

@@ -10,9 +10,9 @@ const Menu = () => {
         
     <BrowserRouter>
     
-        <Link to='/' className="navbar-brand">ICP Credentials</Link>
-        <Link to='/areas' className="dropdown-item" >areas</Link>
-        <Link to='/alumnos' className="dropdown-item" >alumnos</Link>
+        <Link to='/' className="navbar-brand">AjoloTics</Link>
+        <Link to='/areas' className="dropdown-item" >Cabeza</Link>
+        <Link to='/alumnos' className="dropdown-item" >Ganado</Link>
 
         <Routes>
             <Route path="/" element={<Login />} />
