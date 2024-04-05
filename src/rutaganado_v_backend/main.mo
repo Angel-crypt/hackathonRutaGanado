@@ -3,7 +3,8 @@ import Text "mo:base/Text";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
-// Importaciones
+
+//Por hacer, arreglar el hashmap de certificados porque no debe de ser hash map, mas bien crear un arreglo para cada vaca y que se guarden los certificados
 
 // Actor
 actor rutaGanado {
@@ -11,6 +12,10 @@ actor rutaGanado {
     //Usuario
     type User = Principal;
 
+    //Certificados
+    type Certificado = Text;
+    type certificadosCabeza = HashMap.HashMap<Text, Certificado>;
+    var certificados = HashMap.HashMap<User, certificadosCabeza>(0, Principal.equal, Principal.hash);
     // Ingreso de cabeza
     //Datos de ingreso
     type DatosCabeza = {
@@ -91,7 +96,6 @@ actor rutaGanado {
     };
 
     // Función para actualizar datos específicos en DatosGanado en el HashMap
-    // Función para actualizar datos específicos en DatosGanado en el HashMap
     public shared func updateDatosGanado(user : User, arete : Arete, datosCabeza : DatosCabeza) : async Text {
         // Recuperar el HashMap asociado al usuario
         let resultCabeza = cabeza.get(user);
@@ -131,6 +135,51 @@ actor rutaGanado {
                 };
             };
         };
+    };
+
+    // Función para agregar certificados
+    public shared (msg) func guardarCertificado(certificado : Certificado, arete : Arete) : async Certificado {
+        let usuario : Principal = msg.caller;
+        let id : Text = arete;
+
+        // Recuperar el hashmap de certificados asociado al usuario
+        let resultadoCertificados = certificados.get(usuario);
+
+        // Definir una nueva entrada de hashmap si no existe una para el usuario
+        var certificadosFinales : certificadosCabeza = switch resultadoCertificados {
+            case (null) {
+                HashMap.HashMap(0, Text.equal, Text.hash);
+            };
+            case (?resultadoCertificados) resultadoCertificados;
+        };
+
+        // Agregar el certificado al hashmap
+        certificadosFinales.put(id, certificado);
+        // Actualizar el hashmap de certificados con la nueva entrada
+        certificados.put(usuario, certificadosFinales);
+        // Imprimir un mensaje de depuración u realizar cualquier otra acción necesaria
+        Debug.print("Certificado <<" #certificado # ">> agregado exitosamente para la vaca <<" # id # ">>");
+
+        // Devolver el certificado añadido
+        return certificado;
+    };
+
+    // Función para consultar certificados
+    public query (msg) func consultarCertificados() : async [(Text, Certificado)] {
+        let usuario : Principal = msg.caller;
+        let resultado = certificados.get(usuario);
+
+        var certificadosUsuario : certificadosCabeza = switch resultado {
+            case (null) {
+                HashMap.HashMap<Text, Certificado>(0, Text.equal, Text.hash);
+            };
+            case (?resultado) resultado;
+        };
+
+        // Convertir las entradas del hashmap en una secuencia
+        let entradasCertificados = Iter.toArray<(Text, Certificado)>(certificadosUsuario.entries());
+
+        return entradasCertificados;
     };
 
 };
