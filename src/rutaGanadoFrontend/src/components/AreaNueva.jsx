@@ -1,58 +1,57 @@
 import { useCanister } from "@connect2ic/react";
 import React, { useEffect, useState } from "react";
+import { rutaGanadoBackend } from "declarations/rutaGanadoBackend";
 
+function App() {
+    const [message, setMessage] = useState("");
+    const [datosCabeza, setDatosCabeza] = useState({
+        raza: "",
+        propietario: "",
+        fechaNacimiento: "",
+        ascendencia: "",
+        destino: "",
+        dieta: "",
+        mejoramientoGenetico: "",
+        registroEnfermedades: "",
+    });
+    const [arete, setArete] = useState("");
 
-const Alumnos = () => {
-    const [areaICP] = useCanister("rutaGanadoBackend");
-    const [loading, setLoading] = useState("");
-
-
-    const guardarArea = async (e) => {
-        e.preventDefault();
-        var area = e.target[0].value;
-        console.log(area);
-
-        setLoading("Loading...");
-
-        await areaICP.crearArea(area);
-        setLoading("");
-
-        {
-            document.getElementById('btnListaAreas').click();
-        }
-
-        
+    function handleSaveCabeza() {
+        // Assuming rutaganado_v_backend is defined somewhere and has a function saveCabeza
+        rutaGanadoBackend.saveCabeza(datosCabeza, arete)
+            .then(() => {
+                setMessage("Tu cabeza fue agregada correctamente, gracias!");
+            })
+            .catch((error) => {
+                setMessage(`Error: ${error}`);
+            });
     }
 
-    
     return (
-        <div className="row  mt-5">
-            <div className="col">
-          {loading != "" 
-            ? 
-              <div className="alert alert-primary">{loading}</div>
-            :
-              <div></div>
-          }
-            <div class="card">
-                <div class="card-header">
-                    Registrar área
-                </div>
-                <div class="card-body">
-                    <form class="form"  onSubmit={guardarArea}>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombre área</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Ingeniería Eléctrica" />
-                    </div>
-                
-                    <input type="submit" class="btn btn-success" value="Agregar"/>  
-                    </form>
-                </div>
-            </div>
-        </div>
-        </div>
-    )
-  }
-  
-  
-  export default Alumnos
+        <main>
+            <section>
+                <label htmlFor="raza">Raza:</label>
+                <input
+                    id="raza"
+                    type="text"
+                    value={datosCabeza.raza}
+                    onChange={(e) => setDatosCabeza({ ...datosCabeza, raza: e.target.value })}
+                />
+            </section>
+            {/* Other input sections for different attributes */}
+            <section>
+                <label htmlFor="arete">Arete:</label>
+                <input
+                    id="arete"
+                    type="text"
+                    value={arete}
+                    onChange={(e) => setArete(e.target.value)}
+                />
+            </section>
+            <button onClick={handleSaveCabeza}>Subir Cabeza</button>
+            <section id="message">{message}</section>
+        </main>
+    );
+}
+
+export default App;
