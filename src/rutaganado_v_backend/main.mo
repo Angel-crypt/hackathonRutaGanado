@@ -3,7 +3,6 @@ import Text "mo:base/Text";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
-import List "mo:base/List";
 
 // Actor
 actor rutaGanado {
@@ -16,8 +15,6 @@ actor rutaGanado {
         id : Text; // Identificador único del certificado
         entidadEmisora : Text; // Entidad que emitió el certificado
     };
-    //Error en el tipo de lista
-    var certificadosLista : List<Certificado> = List.nil;
 
     // Funciones
 
