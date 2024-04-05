@@ -3,13 +3,23 @@ import Text "mo:base/Text";
 import HashMap "mo:base/HashMap";
 import Debug "mo:base/Debug";
 import Iter "mo:base/Iter";
-// Importaciones
+import List "mo:base/List";
 
 // Actor
 actor rutaGanado {
     // Tipos de datos
     //Usuario
     type User = Principal;
+
+    //Certificados
+    type Certificado = {
+        id : Text; // Identificador único del certificado
+        entidadEmisora : Text; // Entidad que emitió el certificado
+    };
+    //Error en el tipo de lista
+    var certificadosLista : List<Certificado> = List.nil;
+
+    // Funciones
 
     // Ingreso de cabeza
     //Datos de ingreso
@@ -91,7 +101,6 @@ actor rutaGanado {
     };
 
     // Función para actualizar datos específicos en DatosGanado en el HashMap
-    // Función para actualizar datos específicos en DatosGanado en el HashMap
     public shared func updateDatosGanado(user : User, arete : Arete, datosCabeza : DatosCabeza) : async Text {
         // Recuperar el HashMap asociado al usuario
         let resultCabeza = cabeza.get(user);
@@ -132,5 +141,7 @@ actor rutaGanado {
             };
         };
     };
+
+    // Función para agregar certificados\
 
 };
