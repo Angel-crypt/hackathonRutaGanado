@@ -10,12 +10,6 @@ actor rutaGanado {
     //Usuario
     type User = Principal;
 
-    //Certificados
-    type Certificado = {
-        id : Text; // Identificador único del certificado
-        entidadEmisora : Text; // Entidad que emitió el certificado
-    };
-
     // Funciones
 
     // Ingreso de cabeza
@@ -98,8 +92,9 @@ actor rutaGanado {
     };
 
     // Función para actualizar datos específicos en DatosGanado en el HashMap
-    public shared func updateDatosGanado(user : User, arete : Arete, datosCabeza : DatosCabeza) : async Text {
+    public shared (msg)func updateDatosGanado(arete : Arete, datosCabeza : DatosCabeza) : async Text {
         // Recuperar el HashMap asociado al usuario
+        let user : Principal = msg.caller;
         let resultCabeza = cabeza.get(user);
 
         switch resultCabeza {
@@ -139,6 +134,35 @@ actor rutaGanado {
         };
     };
 
-    // Función para agregar certificados\
+    // Función eliminar cabeza
+    public shared (msg) func deleteCabeza(arete: Arete) : async Text {
+    // Recuperar el HashMap asociado al usuario
+    let usuario : Principal = msg.caller;
+    let resultadoCabeza = cabeza.get(usuario);
+
+    switch resultadoCabeza {
+        case (null) {
+            Debug.print("Usuario no encontrado en el HashMap.");
+            return "El usuario no existe"; // Indicador de usuario no encontrado
+        };
+        case (?cabezaActual) {
+            // Verificar si el arete existe en el HashMap actual
+            let datosCabezaActual = cabezaActual.get(arete);
+            switch datosCabezaActual {
+                case (null) {
+                    Debug.print("Arete no encontrado para este usuario.");
+                    return "El arete no existe"; // Indicador de arete no encontrado
+                };
+                case (?datosCabeza) {
+                    // Eliminar el arete del HashMap
+                    cabezaActual.delete(arete);
+                    cabeza.put(usuario, cabezaActual);
+                    Debug.print("Arete eliminado correctamente para el usuario.");
+                    return "Arete eliminado correctamente";
+                };
+            };
+        };
+    };
+}
 
 };
