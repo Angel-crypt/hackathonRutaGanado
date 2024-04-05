@@ -7,7 +7,6 @@ import {  useConnect } from "@connect2ic/react";
 import {BrowserRouter, Route, Link, Routes} from 'react-router-dom';
 import Login from "./Bienvenida";
 import Areas from "./Areas";
-import Programas from "./Programas";
 import Alumnos from "./Alumnos";
 import AreaNueva from "./AreaNueva";
 
@@ -70,7 +69,7 @@ const Home = () => {
         { principal ? ( 
             <div className="container-fluid">
                 
-                    <Link to='/' className="navbar-brand">ICP Credentials</Link>
+                    <Link to='/' className="navbar-brand">AjoloTics</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                     </button>
@@ -81,28 +80,17 @@ const Home = () => {
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Área
+                                Cabeza
                             </a>
                             <ul className="dropdown-menu">
                                 <li><Link to='/area-nueva' className="dropdown-item" >Nuevo</Link></li>
-                                <li><Link to='/areas' className="dropdown-item" id="btnListaAreas">Lista</Link></li>
-                            </ul>
+                                  </ul>
                         </li>
                         <li className="nav-item dropdown">
                             <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Programas
+                                Ganado
                             </a>
                             <ul className="dropdown-menu">
-                                <li><Link to='/programas' className="dropdown-item" >Nuevo</Link></li>
-                                <li><Link to='/programas' className="dropdown-item" >Lista</Link></li>
-                            </ul>
-                        </li>
-                        <li className="nav-item dropdown">
-                            <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Alumnos
-                            </a>
-                            <ul className="dropdown-menu">
-                                    <li><Link to='/alumnos' className="dropdown-item" >Nuevo</Link></li>
                                 <li><Link to='/alumnos' className="dropdown-item" >Lista</Link></li>
                             </ul>
                         </li>
@@ -119,7 +107,7 @@ const Home = () => {
         )
         : ( 
             <div className="container-fluid">
-            <a className="navbar-brand" href="#">ICP Credentials</a>
+            <a className="navbar-brand" href="#">AjoloTics</a>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>
@@ -129,7 +117,6 @@ const Home = () => {
                         <a className="nav-link active" aria-current="page" href="#"></a>
                     </li>
                 </ul>
-                <span className="fs-6 text" style={{ "color": "white", "margin-right": "5px"}}>Inicia sesión</span>
                 <ConnectButton />
                 <ConnectDialog />
             </div>
@@ -141,7 +128,6 @@ const Home = () => {
         <Route path="/" element={<Login />} />
         <Route path="/areas" element={<Areas />} />
         <Route path="/area-nueva" element={<AreaNueva />} />
-        <Route path="/programas" element={<Programas />} />
         <Route path="/alumnos" element={<Alumnos />} />
     </Routes>
 

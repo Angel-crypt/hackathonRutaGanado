@@ -118,8 +118,8 @@ function App() {
                     onChange={(e) => setArete(e.target.value)}
                     placeholder="Arete"
                 />
-                <button type="submit">Guardar</button>
-                <button type="button" onClick={handleReset}>Nuevo ingreso</button>
+                <button type="submit" class = 'btn'>Guardar</button>
+                <button type="button" class = 'new'onClick={handleReset}>Nuevo ingreso</button>
             </form>
             <p>{message}</p>
         </div>
