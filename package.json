@@ -3,16 +3,21 @@
     "node": ">=16.0.0",
     "npm": ">=7.0.0"
   },
-  "name": "rutaganado_v",
+  "name": "rutaganado",
   "scripts": {
     "build": "npm run build --workspaces --if-present",
     "prebuild": "npm run prebuild --workspaces --if-present",
     "pretest": "npm run prebuild --workspaces --if-present",
     "start": "npm start --workspaces --if-present",
-    "test": "npm test --workspaces --if-present"
+    "test": "npm test --workspaces --if-present",
+    "serve": "vite preview"
   },
   "type": "module",
   "workspaces": [
-    "src/rutaganado_v_frontend"
-  ]
+    "src/rutaGanadoFrontend"
+  ],
+  "dependencies": {
+    "bootstrap": "^5.3.3",
+    "react-router-dom": "^6.22.3"
+  }
 }

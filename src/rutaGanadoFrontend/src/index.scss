@@ -1,7 +1,6 @@
 body {
   font-family: sans-serif;
   font-size: 1.5rem;
-  background-color: rgb(255, 221, 227);
 }
 
 img {
@@ -21,14 +20,18 @@ form {
   align-items: baseline;
 }
 
-button{
-  padding: 10px 30px;
+button[type="submit"] {
+  padding: 5px 20px;
   margin: 10px auto;
-  display: block;
-  text-align: center;
-  background-color: palevioletred;
-  color: black;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  float: right;
+}
+
+#greeting {
+  margin: 10px auto;
+  padding: 10px 60px;
+  border: 1px solid #222;
+}
+
+#greeting:empty {
+  display: none;
 }

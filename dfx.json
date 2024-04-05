@@ -1,18 +1,40 @@
 {
   "canisters": {
-    "rutaganado_v_backend": {
-      "main": "src/rutaganado_v_backend/main.mo",
+    "rutaGanadoBackend": {
+      "main": "src/rutaGanadoBackend/main.mo",
       "type": "motoko"
     },
-    "rutaganado_v_frontend": {
+    "rutaGanadoFrontend": {
       "dependencies": [
-        "rutaganado_v_backend"
+        "rutaGanadoBackend"
       ],
       "source": [
-        "src/rutaganado_v_frontend/dist"
+        "src/rutaGanadoFrontend/dist"
       ],
       "type": "assets",
-      "workspace": "rutaganado_v_frontend"
+      "workspace": "rutaGanadoFrontend"
+    },
+    "internet_identity": {
+      "type": "custom",
+      "candid": "https://github.com/dfinity/internet-identity/releases/download/release-2023-09-08/internet_identity.did",
+      "wasm": "https://github.com/dfinity/internet-identity/releases/download/release-2023-09-08/internet_identity_dev.wasm.gz",
+      "remote": {
+        "id": {
+          "ic": "rdmx6-jaaaa-aaaaa-aaadq-cai"
+        }
+      }
+    }
+  },
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:4943",
+      "type": "ephemeral"
+    },
+    "ic": {
+      "providers": [
+        "https://mainnet.dfinity.network"
+      ],
+      "type": "persistent"
     }
   },
   "defaults": {
