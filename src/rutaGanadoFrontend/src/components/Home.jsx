@@ -9,6 +9,7 @@ import Login from "./Bienvenida";
 import Areas from "./Areas";
 import Ganado from "./Ganado";
 import CabezaNueva from "./CabezaNueva";
+import Catalogo from "./Catalogo";
 
 const Home = () => {
   const {principal} = useConnect();
@@ -83,7 +84,7 @@ const Home = () => {
                                 Cabeza
                             </a>
                             <ul className="dropdown-menu">
-                                <li><Link to='/cabeza-nueva' className="dropdown-item" >Nuevo</Link></li>
+                                <li><Link to='/cabeza-nueva' className="dropdown-item" >Nuevo registro</Link></li>
                                   </ul>
                         </li>
                         <li className="nav-item dropdown">
@@ -91,7 +92,8 @@ const Home = () => {
                                 Ganado
                             </a>
                             <ul className="dropdown-menu">
-                                <li><Link to='/ganado' className="dropdown-item" >Lista</Link></li>
+                                <li><Link to='/ganado' className="dropdown-item" >Consultar Especifico</Link></li>
+                                <li><Link to='/catalogo' className="dropdown-item" >Catalogo</Link></li>
                             </ul>
                         </li>
                     
@@ -129,6 +131,7 @@ const Home = () => {
         <Route path="/areas" element={<Areas />} />
         <Route path="/cabeza-nueva" element={<CabezaNueva />} />
         <Route path="/ganado" element={<Ganado />} />
+        <Route path="/catalogo" element={<Catalogo />} />
     </Routes>
 
     </BrowserRouter>

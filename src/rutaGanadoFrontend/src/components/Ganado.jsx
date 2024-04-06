@@ -8,9 +8,9 @@ function App() {
 
   async function handleConsultarCabeza() {
     try {
-      const datosCabeza = await rutaGanadoBackend.consultCabeza(arete);
-      setDatosCabeza(datosCabeza);
-      console.log(datosCabeza);
+      const datosCabezaResponse = await rutaGanadoBackend.consultCabeza(arete);
+      setDatosCabeza(datosCabezaResponse);
+      console.log(datosCabezaResponse);
     } catch (error) {
       setError(error.message);
     }
@@ -30,7 +30,54 @@ function App() {
       {datosCabeza && (
         <div>
           <h3>Datos de la Cabeza:</h3>
-          <label>Raza: </label><br />
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Raza: </label>
+              <strong>{data.raza}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Propìetasrio: </label>
+              <strong>{data.propietario}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Fecha Nacimiento: </label>
+              <strong>{data.fechaNacimiento}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Ascendencia: </label>
+              <strong>{data.ascendencia}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Destino: </label>
+              <strong>{data.destino}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Dieta: </label>
+              <strong>{data.dieta}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Mejoramiento Genetico: </label>
+              <strong>{data.mejoramientoGenetico}</strong>
+            </div>
+          ))}
+          {datosCabeza.map((data, index) => (
+            <div key={index}>
+              <label>Registro de Enfermedades: </label>
+              <strong>{data.registroEnfermedades}</strong>
+            </div>
+          ))}
         </div>
       )}
     </div>
