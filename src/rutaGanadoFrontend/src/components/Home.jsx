@@ -1,4 +1,3 @@
-
 import { createClient } from "@connect2ic/core"
 import { InternetIdentity } from "@connect2ic/core/providers/internet-identity"
 import { ConnectButton, ConnectDialog, Connect2ICProvider } from "@connect2ic/react"
@@ -70,7 +69,7 @@ const Home = () => {
         { principal ? ( 
             <div className="container">       
                     
-                      <div class="col-sm-2"><button className="btn btn-primary btn-lg"> <Link to='/ganado' >Consultar Especifico</Link></button></div>
+                      <div class="col-sm-2"><button className="btn btn-primary btn-lg"> <Link to='/ganado' >Buscar Arete</Link></button></div>
                       <div class="col-sm-2"><button  className="btn btn-primary btn-lg"><Link to='/cabeza-nueva' >Nuevo registro</Link></button></div>
                       <div class="col-sm-2"><button className="btn btn-primary btn-lg"><Link to='/catalogo'  >Catalogo</Link></button></div>
                     {/* <span className="fs-6 text">{principal}</span> */}
@@ -102,7 +101,7 @@ const Home = () => {
         <Route path="/areas" element={<Areas />} />
         <Route path="/cabeza-nueva" element={<CabezaNueva />} />
         <Route path="/ganado" element={<Ganado />} />
-        <Route path="/catalogo" element={<Catalogo />} />
+        <Route path="/Catalogo" element={<Catalogo />} />
     </Routes>
 
     </BrowserRouter>

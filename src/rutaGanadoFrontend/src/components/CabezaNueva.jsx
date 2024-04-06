@@ -94,11 +94,30 @@ function App() {
                         placeholder="Destino"
                         className="form-control mb-2"
                     />
+               
+                    <button type="submit" className="btn btn-primary mr-2">Guardar</button>
+                    <button type="button" className="btn btn-secondary" onClick={handleReset}>Nuevo ingreso</button>
+                </form>
+                <div className="col-md-6">
                     <input
                         type="text"
                         value={dieta}
                         onChange={(e) => setDieta(e.target.value)}
                         placeholder="Dieta"
+                        className="form-control mb-2"
+                    />
+                <input
+                        type="text"
+                        value={propietario}
+                        onChange={(e) => setPropietario(e.target.value)}
+                        placeholder="Propietario"
+                        className="form-control mb-2"
+                    />
+                    <input
+                        type="text"
+                        value={fechaNacimiento}
+                        onChange={(e) => setFechaNacimiento(e.target.value)}
+                        placeholder="Fecha de Nacimiento"
                         className="form-control mb-2"
                     />
                     <input
@@ -115,28 +134,8 @@ function App() {
                         placeholder="Registro de Enfermedades"
                         className="form-control mb-2"
                     />
-               
-                    <button type="submit" className="btn btn-primary mr-2">Guardar</button>
-                    <button type="button" className="btn btn-secondary" onClick={handleReset}>Nuevo ingreso</button>
-                </form>
-                <div className="col-md-6">
-                <input
-                        type="text"
-                        value={propietario}
-                        onChange={(e) => setPropietario(e.target.value)}
-                        placeholder="Propietario"
-                        className="form-control mb-2"
-                    />
                 </div>
-                  
-                <input
-                        type="text"
-                        value={fechaNacimiento}
-                        onChange={(e) => setFechaNacimiento(e.target.value)}
-                        placeholder="Fecha de Nacimiento"
-                        className="form-control mb-2"
-                    />
-                <div class="alert"><p>{message}</p></div>
+                <div class="alert" ><p>{message}</p></div>
             </div>
         </div>
     );
