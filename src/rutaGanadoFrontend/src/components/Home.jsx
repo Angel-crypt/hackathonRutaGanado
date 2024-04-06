@@ -8,7 +8,7 @@ import {BrowserRouter, Route, Link, Routes} from 'react-router-dom';
 import Login from "./Bienvenida";
 import Areas from "./Areas";
 import Ganado from "./Ganado";
-import AreaNueva from "./CabezasNuevas";
+import CabezaNueva from "./CabezaNueva";
 
 const Home = () => {
   const {principal} = useConnect();
@@ -83,7 +83,7 @@ const Home = () => {
                                 Cabeza
                             </a>
                             <ul className="dropdown-menu">
-                                <li><Link to='/area-nueva' className="dropdown-item" >Nuevo</Link></li>
+                                <li><Link to='/ganado-nueva' className="dropdown-item" >Nuevo</Link></li>
                                   </ul>
                         </li>
                         <li className="nav-item dropdown">
@@ -127,7 +127,7 @@ const Home = () => {
     <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/areas" element={<Areas />} />
-        <Route path="/area-nueva" element={<AreaNueva />} />
+        <Route path="/cabeza-nueva" element={<CabezaNueva />} />
         <Route path="/ganado" element={<Ganado />} />
     </Routes>
 

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useCanister } from "@connect2ic/react";
 import { actor } from "../../../declarations/rutaGanadoBackend";
 
 function ConsultarCabeza() {
