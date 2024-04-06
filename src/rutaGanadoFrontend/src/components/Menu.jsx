@@ -2,7 +2,7 @@
 import {BrowserRouter, Route, Link, Routes} from 'react-router-dom';
 import Login from "./Bienvenida";
 import Areas from "./Areas";
-import Alumnos from "./Alumnos";
+import Ganado from "./Ganado";
 
 const Menu = () => {
   
@@ -12,12 +12,12 @@ const Menu = () => {
     
         <Link to='/' className="navbar-brand">AjoloTics</Link>
         <Link to='/areas' className="dropdown-item" >Cabeza</Link>
-        <Link to='/alumnos' className="dropdown-item" >Ganado</Link>
+        <Link to='/ganado' className="dropdown-item" >Ganado</Link>
 
         <Routes>
             <Route path="/" element={<Login />} />
             <Route path="/areas" element={<Areas />} />
-            <Route path="/alumnos" element={<Alumnos />} />
+            <Route path="/ganado" element={<Ganado />} />
         </Routes>
     </BrowserRouter>
 

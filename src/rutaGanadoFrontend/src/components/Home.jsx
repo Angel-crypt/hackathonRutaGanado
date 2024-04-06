@@ -7,7 +7,7 @@ import {  useConnect } from "@connect2ic/react";
 import {BrowserRouter, Route, Link, Routes} from 'react-router-dom';
 import Login from "./Bienvenida";
 import Areas from "./Areas";
-import Alumnos from "./Alumnos";
+import Ganado from "./Ganado";
 import AreaNueva from "./CabezasNuevas";
 
 const Home = () => {
@@ -91,7 +91,7 @@ const Home = () => {
                                 Ganado
                             </a>
                             <ul className="dropdown-menu">
-                                <li><Link to='/alumnos' className="dropdown-item" >Lista</Link></li>
+                                <li><Link to='/ganado' className="dropdown-item" >Lista</Link></li>
                             </ul>
                         </li>
                     
@@ -128,7 +128,7 @@ const Home = () => {
         <Route path="/" element={<Login />} />
         <Route path="/areas" element={<Areas />} />
         <Route path="/area-nueva" element={<AreaNueva />} />
-        <Route path="/alumnos" element={<Alumnos />} />
+        <Route path="/ganado" element={<Ganado />} />
     </Routes>
 
     </BrowserRouter>

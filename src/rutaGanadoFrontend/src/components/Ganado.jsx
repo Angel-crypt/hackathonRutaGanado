@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
-import { rutaGanadoBackend } from 'declarations/rutaGanadoBackend';
+import React from 'react';
+import { actor } from "../../../declarations/rutaGanadoBackend";
 
 function ConsultarCabeza() {
-  const [arete, setArete] = useState('');
-  const [datosCabeza, setDatosCabeza] = useState(null);
-  const [error, setError] = useState('');
 
-  function handleConsultarCabeza(event) {
+  async function handleConsultarCabeza(event) {
     event.preventDefault();
-    rutaGanadoBackend
-      .consultCabeza(arete)
-      .then((datos) => {
-        setDatosCabeza(datos);
-        setError('');
-      })
-      .catch((error) => {
-        setDatosCabeza(null);
-        setError(`Error: ${error}`);
-      });
+    const arete = document.getElementById("areteInput").value; // Asegúrate de que el input tenga este ID
+    try {
+      const datosCabeza = await actor.consultarCabeza(arete);
+      if (datosCabeza) {
+        console.log("Datos de la Cabeza:", datosCabeza);
+        // Actualiza el estado o el DOM aquí para mostrar los datos
+      } else {
+        console.error("No se encontraron datos o no tienes permisos para verlos.");
+      }
+    } catch (error) {
+      console.error("Error al consultar los datos:", error);
+    }
   }
 
   return (
