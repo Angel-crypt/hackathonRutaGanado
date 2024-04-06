@@ -14,10 +14,6 @@ function App() {
     } catch (error) {
       setError(error.message);
     }
-  
-    function handleGetCabeza() {
-      set Raza
-    }
   }
 
   return (
@@ -34,7 +30,7 @@ function App() {
       {datosCabeza && (
         <div>
           <h3>Datos de la Cabeza:</h3>
-          <label>Raza:</label><br />
+          <label>Raza: </label><br />
         </div>
       )}
     </div>
