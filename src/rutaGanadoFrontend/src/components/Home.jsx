@@ -83,7 +83,7 @@ const Home = () => {
                                 Cabeza
                             </a>
                             <ul className="dropdown-menu">
-                                <li><Link to='/ganado-nueva' className="dropdown-item" >Nuevo</Link></li>
+                                <li><Link to='/cabeza-nueva' className="dropdown-item" >Nuevo</Link></li>
                                   </ul>
                         </li>
                         <li className="nav-item dropdown">

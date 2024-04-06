@@ -65,9 +65,11 @@ actor rutaGanado {
 
         switch resultCabeza {
             case (?cabeza) {
+                Debug.print("Correcto");
                 return cabeza.get(arete);
             };
             case (null) {
+                Debug.print("Usuario no encontrado en el HashMap.");
                 return null;
             };
         };
